@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    business_email: '%env(BUSINESS_EMAIL)%'
+    discord_webhook_url: '%env(DISCORD_WEBHOOK_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +21,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\Service\BillingReminderService:
+        arguments:
+            $businessEmail: '%business_email%'
+            $discordWebhookUrl: '%discord_webhook_url%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
